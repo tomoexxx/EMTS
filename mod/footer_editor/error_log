@@ -1,0 +1,1 @@
+[24-May-2012 19:06:27] PHP WARNING: 2012-05-24 19:06:27 (EDT): "session_start() [<a href='function.session-start'>function.session-start</a>]: Cannot send session cache limiter - headers already sent (output started at /home/kidspace/public_html/elgg183/mod/footer_editor/thankyou.php:2)" in file /home/kidspace/public_html/elgg183/engine/lib/sessions.php (line 398)
