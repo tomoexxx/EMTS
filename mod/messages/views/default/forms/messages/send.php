@@ -23,7 +23,7 @@ if (!array_key_exists($recipient_guid, $recipients_options)) {
 }
 
 //>>>>>Added by demmys
-if(elgg_is_admin_user($vars['user']->guid)){
+if(elgg_is_admin_logged_in){
 	$recipients_options[-1] = 'すべてのユーザー';
 }
 //<<<<<
