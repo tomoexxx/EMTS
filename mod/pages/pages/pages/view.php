@@ -32,24 +32,29 @@ pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_entity($page, array('full_view' => true));
-$content .= elgg_view_comments($page);
+/* Add Tani 2013.12.06 */
+if ($page->tags != "creator") {
+	$content .= elgg_view_comments($page);
 
-// can add subpage if can edit this page and write to container (such as a group)
-if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
-	$url = "pages/add/$page->guid";
-	elgg_register_menu_item('title', array(
+	// can add subpage if can edit this page and write to container (such as a group)
+	if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
+		$url = "pages/add/$page->guid";
+		elgg_register_menu_item('title', array(
 			'name' => 'subpage',
 			'href' => $url,
 			'text' => elgg_echo('pages:newchild'),
 			'link_class' => 'elgg-button elgg-button-action',
-	));
+		));
+	}
+
+	$sidebar = elgg_view('pages/sidebar/navigation');
 }
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('pages/sidebar/navigation'),
+	'sidebar' => $sidebar,
 ));
 
 echo elgg_view_page($title, $body);

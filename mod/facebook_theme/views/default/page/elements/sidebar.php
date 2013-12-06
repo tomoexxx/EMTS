@@ -5,7 +5,11 @@
  * @uses $vars['sidebar'] Optional content that is displayed at the bottom of sidebar
  */
 
-echo elgg_view('page/elements/owner_block', $vars);
+/* Modify Tani 2013.12.06 */
+$role = roles_get_role();
+if ($role->name != "creator") {
+	echo elgg_view('page/elements/owner_block', $vars);
+}
 
 echo elgg_view_menu('page', array('sort_by' => 'priority'));
 

@@ -10,7 +10,8 @@ $db_prefix = elgg_get_config('dbprefix');
 
 $role = roles_get_role();
 switch ($role->name) {
-	case 'moderator':
+	case 'creator':
+/*
 		$num_albums = 2;
 		$title = elgg_echo('album:all');
 		$composer = elgg_list_entities(array(
@@ -24,7 +25,8 @@ switch ($role->name) {
 			'gallery_class' => 'tidypics-gallery',
 		));
 		$composer .= elgg_echo('<hr />');
-
+*/
+		$title = elgg_echo('roles_creators:timeline');
 		$activity = elgg_list_river(array(
 			'joins' => array("JOIN {$db_prefix}entities object ON object.guid = rv.object_guid"),
 			'wheres' => array("

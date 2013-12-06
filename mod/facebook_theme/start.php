@@ -293,11 +293,18 @@ function facebook_theme_pagesetup_handler() {
 			));
 		}
 		
+		/* Modify Tani 2013.12.05 */
+		$role = roles_get_role();
+		if ($role->name == "creator") {
+			$text = elgg_view_icon('list') . elgg_echo('roles_creators:pages:title');
+		} else {
+			$text = elgg_view_icon('list') . elgg_echo('pages');
+		}
 		if (elgg_is_active_plugin('pages')) {
 			elgg_register_menu_item('page', array(
 				'section' => 'more',	
 				'name' => 'pages',
-				'text' => elgg_view_icon('list') . elgg_echo('pages'),
+				'text' => $text,
 				//'href' => "/pages/friends/$user->username",
 				'href' => "/pages/owner/$user->username",
 				'contexts' => array('dashboard'),
@@ -385,7 +392,7 @@ function facebook_theme_pagesetup_handler() {
 			 * 'text' => "<h1 id=\"facebook-topbar-logo\">$site->name</h1>",
 			 */
 			//'text' => "<img src=\"/_graphics/joinhands_logo.png\" height=90px width=100px>",
-			'text' => "<img src=\"/_graphics/joinhands_s.png\" height=95px width=90px>",
+			'text' => "<img src=\"/_graphics/joinhands_s.png\" height=95px width=85px>",
 		));
 	
 		elgg_register_menu_item('topbar', array(

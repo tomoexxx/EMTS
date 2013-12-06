@@ -12,17 +12,35 @@
 function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = null) {
 
 	// input names => defaults
-	$values = array(
-		'title' => '',
-		'description' => '',
-		'access_id' => ACCESS_DEFAULT,
-		'write_access_id' => ACCESS_DEFAULT,
-		'tags' => '',
-		'container_guid' => elgg_get_page_owner_guid(),
-		'guid' => null,
-		'entity' => $page,
-		'parent_guid' => $parent_guid,
-	);
+	$role = roles_get_role();
+	switch ($role->name) {
+		case 'creator':
+			$values = array(
+				'title' => '',
+				'description' => '',
+				'access_id' => '2',
+				'write_access_id' => '0',
+				'tags' => 'creator',
+				'container_guid' => elgg_get_page_owner_guid(),
+				'guid' => null,
+				'entity' => $page,
+				'parent_guid' => $parent_guid,
+			);
+			break;
+		default:
+			$values = array(
+				'title' => '',
+				'description' => '',
+				'access_id' => ACCESS_DEFAULT,
+				'write_access_id' => ACCESS_DEFAULT,
+				'tags' => '',
+				'container_guid' => elgg_get_page_owner_guid(),
+				'guid' => null,
+				'entity' => $page,
+				'parent_guid' => $parent_guid,
+			);
+			break;
+	}
 
 	if ($page) {
 		foreach (array_keys($values) as $field) {

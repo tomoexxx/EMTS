@@ -22,7 +22,17 @@ if (elgg_instanceof($container, 'object')) {
 
 elgg_set_page_owner_guid($page_owner->getGUID());
 
-$title = elgg_echo('pages:add');
+/* Add Tani 2013.12.02 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		$title = elgg_echo('roles_creators:pages:add');
+		break;
+
+	default:
+		$title = elgg_echo('pages:add');
+		break;
+}
 elgg_push_breadcrumb($title);
 
 $vars = pages_prepare_form_vars(null, $parent_guid);

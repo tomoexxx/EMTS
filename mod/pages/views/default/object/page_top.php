@@ -90,7 +90,8 @@ if ($full) {
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 	);
-	$params = $params + $vars;
+	//$params = $params + $vars;
+	$params = $params;
 	$summary = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view('object/elements/full', array(

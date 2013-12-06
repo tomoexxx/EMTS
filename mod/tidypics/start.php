@@ -376,6 +376,12 @@ function tidypics_page_handler($page) {
                         require "$base_lists/contestsall.php";
 			break;
 
+		/* Add Tani 2013.12.01 */
+		case "creator":
+			set_input('username', $page[1]);
+			require "$base/creator.php";
+			break;
+
 		default:
 			return false;
 	}

@@ -24,7 +24,7 @@ if (elgg_is_logged_in()) {
 
 /* Modify Tani */
 // one event
-$content = elgg_view('statichtml/event_banner');
+//$content = elgg_view('statichtml/event_banner');
 // slideshow
 //$content = elgg_view('statichtml/top_banner');
 $content .= elgg_view('statichtml/joinhands');
@@ -32,7 +32,7 @@ $content .= elgg_view('statichtml/joinhands');
 $content .= elgg_view_title(elgg_echo('content:latest'));
 $content .= elgg_list_river();
 */
-$content .= elgg_view_title(elgg_echo('news'));
+//$content .= elgg_view_title(elgg_echo('news'));
 //$content .= elgg_view('customhtml/news20130817);
 $login_box = elgg_view('core/account/login_box');
 $side_content = elgg_view('statichtml/whats_new2');

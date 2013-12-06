@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/contestsall');
+elgg_push_breadcrumb(elgg_echo('photos'), 'photos/contest');
 elgg_push_breadcrumb(elgg_echo('groups:contest'));
 
 $num_albums = 16;
