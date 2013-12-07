@@ -210,12 +210,6 @@ function pages_icon_url_override($hook, $type, $returnvalue, $params) {
  * Add a menu item to the user ownerblock
  */
 function pages_owner_block_menu($hook, $type, $return, $params) {
-	/* Add Tani 2013.12.05 */
-	$role = roles_get_role();
-	if ($role->name == "creator") {
-		return $return;
-	}
-
 	if (elgg_instanceof($params['entity'], 'user')) {
 		$url = "pages/owner/{$params['entity']->username}";
 		$item = new ElggMenuItem('pages', elgg_echo('pages'), $url);

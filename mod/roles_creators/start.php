@@ -51,7 +51,7 @@ function roles_creators_config($hook_name, $entity_type, $return_value, $params)
 */
 
 					'page::news' => array('rule' => 'deny'),
-					'page::events' => array('rule' => 'deny'),
+//					'page::events' => array('rule' => 'deny'),
 					'page::photos' => array('rule' => 'deny'),
 					'page::contest' => array('rule' => 'deny'),
 					//'page::regexp(/^group-/)' => array('rule' => 'deny'),
