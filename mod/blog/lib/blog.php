@@ -119,6 +119,12 @@ function blog_get_page_content_list($container_guid = NULL) {
 		$return['content'] = $list;
 	}
 
+	/* Add Tani 2013.12.07 */
+	$role = roles_get_role();
+	if ($role->name == "creator") {
+		$return['filter'] = '';
+	}
+	
 	return $return;
 }
 
@@ -344,18 +350,38 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 
 	// input names => defaults
-	$values = array(
-		'title' => NULL,
-		'description' => NULL,
-		'status' => 'published',
-		'access_id' => ACCESS_DEFAULT,
-		'comments_on' => 'On',
-		'excerpt' => NULL,
-		'tags' => NULL,
-		'container_guid' => NULL,
-		'guid' => NULL,
-		'draft_warning' => '',
-	);
+	/* Modify Tani 2013.12.07 */
+	$role = roles_get_role();
+	switch ($role->name) {
+		case 'creator':
+			$values = array(
+				'title' => NULL,
+				'description' => NULL,
+				'status' => 'published',
+				'access_id' => '2',
+				'comments_on' => 'On',
+				'excerpt' => NULL,
+				'tags' => 'creator',
+				'container_guid' => NULL,
+				'guid' => NULL,
+				'draft_warning' => '',
+			);
+			break;
+		default:
+			$values = array(
+				'title' => NULL,
+				'description' => NULL,
+				'status' => 'published',
+				'access_id' => ACCESS_DEFAULT,
+				'comments_on' => 'On',
+				'excerpt' => NULL,
+				'tags' => NULL,
+				'container_guid' => NULL,
+				'guid' => NULL,
+				'draft_warning' => '',
+			);
+			break;
+	}
 
 	if ($post) {
 		foreach (array_keys($values) as $field) {

@@ -90,19 +90,42 @@ $comments_input = elgg_view('input/dropdown', array(
 	'options_values' => array('On' => elgg_echo('on'), 'Off' => elgg_echo('off'))
 ));
 
-$tags_label = elgg_echo('tags');
-$tags_input = elgg_view('input/tags', array(
-	'name' => 'tags',
-	'id' => 'blog_tags',
-	'value' => $vars['tags']
-));
+/* Add Tani 2013.12.07 */
+if (elgg_is_admin_logged_in()) {
+	$tags_label = elgg_echo('tags');
+	$tags_input = elgg_view('input/tags', array(
+		'name' => 'tags',
+		'id' => 'blog_tags',
+		'value' => $vars['tags']
+	));
+} else {
+	$tags_input = elgg_view('input/hidden', array(
+		'name' => 'tags',
+		'id' => 'blog_tags',
+		'value' => $vars['tags']
+	));
+}
 
 $access_label = elgg_echo('access');
-$access_input = elgg_view('input/access', array(
-	'name' => 'access_id',
-	'id' => 'blog_access_id',
-	'value' => $vars['access_id']
-));
+/* Add Tani 2013.12.07 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		$access_input = elgg_view('input/access', array(
+			'name' => 'access_id',
+			'id' => 'blog_access_id',
+			'disabled' => 'true',
+			'value' => $vars['access_id']
+		));
+		break;
+	default:
+		$access_input = elgg_view('input/access', array(
+			'name' => 'access_id',
+			'id' => 'blog_access_id',
+			'value' => $vars['access_id']
+		));
+		break;
+}
 
 $categories_input = elgg_view('input/categories', $vars);
 
