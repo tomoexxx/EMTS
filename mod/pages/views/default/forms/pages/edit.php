@@ -36,6 +36,10 @@ foreach ($variables as $name => $type) {
 	if ($name == "tags" && !elgg_is_admin_logged_in()) {
 		$input_view = "input/hidden";
 	}
+	/* Add Tani 2013.12.09 */
+	if ($role->name == "creator" && ($name == "access_id" || $name == "write_access_id")) {
+		$input_view = "input/hidden";
+	}
 ?>
 <div>
 	<?php
@@ -49,21 +53,11 @@ foreach ($variables as $name => $type) {
 		}
 */
 
-		/* Modify Tani 2013.12.06 */
-		if ($role->name == "creator" && ($name == "access_id" || $name == "write_access_id")) {
-			echo elgg_view($input_view, array(
-				'name' => $name,
-				'value' => $vars[$name],
-				'disabled' => 'true',
-				'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
-			));
-		} else {
-			echo elgg_view($input_view, array(
-				'name' => $name,
-				'value' => $vars[$name],
-				'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
-			));
-		}
+		echo elgg_view($input_view, array(
+			'name' => $name,
+			'value' => $vars[$name],
+			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
+		));
 	?>
 </div>
 <?php

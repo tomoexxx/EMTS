@@ -24,18 +24,38 @@ $owner = elgg_get_page_owner_entity();
 gatekeeper(); 
 group_gatekeeper();
 
-$title = elgg_echo('album:edit');
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		$title = elgg_echo('album:edit');
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if (elgg_instanceof($owner, 'user')) {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-} else {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+		// set up breadcrumbs
+		elgg_push_breadcrumb(elgg_echo('roles_creators:items:themelist'), 'photos/creator/');
+		elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
+		elgg_push_breadcrumb($title);
+
+		// set up sidebar
+		$sidebar = '';
+		break;
+	
+	default:
+		$title = elgg_echo('album:edit');
+
+		// set up breadcrumbs
+		elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
+		elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
+		if (elgg_instanceof($owner, 'user')) {
+			elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+		} else {
+			elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+		}
+		elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
+		elgg_push_breadcrumb($title);
+		
+		// set up sidebar
+		$sidebar = elgg_view('photos/sidebar', array('page' => 'album'));
+		break;
 }
-elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
-elgg_push_breadcrumb($title);
 
 $vars = tidypics_prepare_form_vars($entity);
 $content = elgg_view_form('photos/album/save', array('method' => 'post'), $vars);
@@ -44,7 +64,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'album')),
+	'sidebar' => $sidebar,
 ));
 
 echo elgg_view_page($title, $body);

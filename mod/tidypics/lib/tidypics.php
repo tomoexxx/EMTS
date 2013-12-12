@@ -76,15 +76,33 @@ function tp_get_img_dir($album_guid) {
  */
 function tidypics_prepare_form_vars($entity = null) {
 	// input names => defaults
-	$values = array(
-		'title' => '',
-		'description' => '',
-		'access_id' => ACCESS_DEFAULT,
-		'tags' => '',
-		'container_guid' => elgg_get_page_owner_guid(),
-		'guid' => null,
-		'entity' => $entity,
-	);
+	/* Add Tani 2013.12.09 */
+	$role = roles_get_role();
+	switch ($role->name) {
+		case 'creator':
+			$values = array(
+				'title' => '',
+				'description' => '',
+				'access_id' => '2',
+				'tags' => 'creator',
+				'container_guid' => elgg_get_page_owner_guid(),
+				'guid' => null,
+				'entity' => $entity,
+			);
+			break;
+		
+		default:
+			$values = array(
+				'title' => '',
+				'description' => '',
+				'access_id' => ACCESS_DEFAULT,
+				'tags' => '',
+				'container_guid' => elgg_get_page_owner_guid(),
+				'guid' => null,
+				'entity' => $entity,
+			);
+			break;
+	}
 
 	if ($entity) {
 		foreach (array_keys($values) as $field) {

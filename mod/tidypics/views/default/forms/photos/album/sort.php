@@ -7,7 +7,16 @@ $album = $vars['album'];
 $image_guids = $album->getImageList();
 
 echo '<div>';
-echo elgg_echo('tidypics:sort:instruct');
+/* Add Tani 2013.12.09 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		echo elgg_echo('roles_creators:sort:instruct');
+		break;
+	default:
+		echo elgg_echo('tidypics:sort:instruct');
+		break;
+}
 echo '</div>';
 
 echo '<div>';

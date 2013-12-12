@@ -8,8 +8,8 @@
 
 /* Add Tani 2013.07.01 */
 if (!elgg_is_logged_in()) {
-        register_error(elgg_echo('loggedinrequired'));
-        forward('');
+	register_error(elgg_echo('loggedinrequired'));
+	forward('');
 }
 
 group_gatekeeper();
@@ -20,7 +20,15 @@ if (!$owner) {
 	$owner = get_user_by_username($username);
 }
 
-$title = elgg_echo('album:user', array($owner->name));
+/* Add Tani 2013.12.11 */
+/*
+$role = roles_get_role($owner);
+if ($role->name == 'creator') {
+	forward('/photos/creator/' . $owner->name);
+}
+*/
+
+$title = elgg_echo('album:user', array($owner->name)) . $role->name;
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');

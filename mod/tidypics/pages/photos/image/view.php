@@ -33,16 +33,28 @@ if ($album) {
 }
 //$owner = elgg_get_page_owner_entity();
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if (elgg_instanceof($owner, 'group')) {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
-} else {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+/* Add Tani 2013.12.09 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		// set up breadcrumbs
+		elgg_push_breadcrumb(elgg_echo('roles_creators:items:themelist'), 'photos/creator/');
+		elgg_push_breadcrumb($album->getTitle(), $album->getURL());
+		elgg_push_breadcrumb($photo->getTitle());
+		break;
+	default:
+		// set up breadcrumbs
+		elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
+		elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
+		if (elgg_instanceof($owner, 'group')) {
+			elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+		} else {
+			elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+		}
+		elgg_push_breadcrumb($album->getTitle(), $album->getURL());
+		elgg_push_breadcrumb($photo->getTitle());
+		break;
 }
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb($photo->getTitle());
 
 elgg_load_js('lightbox');
 elgg_load_css('lightbox');
@@ -73,24 +85,44 @@ if (elgg_get_plugin_setting('download_link', 'tidypics')) {
 $content = elgg_view_entity($photo, array('full_view' => true));
 
 /* Modify Tani 2013.07.01 */
-if (elgg_is_logged_in()) {
-	$body = elgg_view_layout('content', array(
-		'filter' => false,
-		'content' => $content,
-		'title' => $photo->getTitle(),
-		'sidebar' => elgg_view('photos/sidebar', array(
-			'page' => 'photo',
-			//'page' => 'tp_view',
-			//'image' => $photo,
-		)),
-	));
-} else {
-	$body = elgg_view_layout('one_sidebar', array(
-		//'filter' => false,
-		'content' => "<h1>" . $photo->getTitle() . "</h1>" . $content,
-		//'title' => $photo->getTitle(),
-		'sidebar' => elgg_view('core/account/login_box'),
-	));
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		$body = elgg_view_layout('content', array(
+			'filter' => false,
+			'content' => $content,
+			'title' => $photo->getTitle(),
+	/*
+			'sidebar' => elgg_view('photos/sidebar', array(
+				'page' => 'photo',
+				//'page' => 'tp_view',
+				//'image' => $photo,
+			)),
+	*/
+		));
+		break;
+	
+	case 'vistor':
+		$body = elgg_view_layout('one_sidebar', array(
+			//'filter' => false,
+			'content' => "<h1>" . $photo->getTitle() . "</h1>" . $content,
+			//'title' => $photo->getTitle(),
+			'sidebar' => elgg_view('core/account/login_box'),
+		));
+		break;
+
+	default:
+		$body = elgg_view_layout('content', array(
+			'filter' => false,
+			'content' => $content,
+			'title' => $photo->getTitle(),
+			'sidebar' => elgg_view('photos/sidebar', array(
+				'page' => 'photo',
+				//'page' => 'tp_view',
+				//'image' => $photo,
+			)),
+		));
+		break;
 }
 
 echo elgg_view_page($photo->getTitle(), $body);

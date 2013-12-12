@@ -29,6 +29,8 @@ if ($vars['page'] == 'owner' || $vars['page'] == 'group') {
 	echo elgg_view('blog/sidebar/archives', $vars);
 }
 
+/* Delete Tani 2013.12.09 */
+/*
 if ($vars['page'] != 'friends') {
 	echo elgg_view('page/elements/tagcloud_block', array(
 		'subtypes' => 'blog',
@@ -36,3 +38,4 @@ if ($vars['page'] != 'friends') {
 		'owner_guid' => $owner->guid,
 	));
 }
+*/

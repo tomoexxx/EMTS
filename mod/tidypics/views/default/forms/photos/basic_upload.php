@@ -16,7 +16,16 @@ $album = $vars['entity'];
 $maxfilesize = (float) elgg_get_plugin_setting('maxfilesize', 'tidypics');
 
 $instructions = elgg_echo("tidypics:uploader:upload");
-$max = elgg_echo('tidypics:uploader:basic', array($maxfilesize));
+/* Add Tani 2013.12.09 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		$max = elgg_echo('roles_creators:uploader:basic', array($maxfilesize));
+		break;
+	default:
+		$max = elgg_echo('tidypics:uploader:basic', array($maxfilesize));
+		break;
+}
 
 $list = '';
 for ($x = 0; $x < 10; $x++) {
@@ -24,7 +33,14 @@ for ($x = 0; $x < 10; $x++) {
 }
 
 $foot = elgg_view('input/hidden', array('name' => 'guid', 'value' => $album->getGUID()));
-$foot .= elgg_view('input/submit', array('value' => elgg_echo("photos:addphotos")));
+switch ($role->name) {
+	case 'creator':
+		$foot .= elgg_view('input/submit', array('value' => elgg_echo("roles_creators:items:regitems")));
+		break;
+	default:
+		$foot .= elgg_view('input/submit', array('value' => elgg_echo("photos:addphotos")));
+		break;
+}
 
 $form_body = <<<HTML
 <div>

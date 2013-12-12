@@ -30,14 +30,29 @@ if (!$album->getContainerEntity()->canWriteToContainer()) {
 elgg_set_page_owner_guid($album->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
 
-$title = elgg_echo('album:addpix');
+/* Add Tani 2013.12.09 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		$title = elgg_echo('roles_creators:items:regitems');
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb(elgg_echo('album:addpix'));
+		// set up breadcrumbs
+		elgg_push_breadcrumb(elgg_echo('roles_creators:items:themelist'), 'photos/creator/');
+		elgg_push_breadcrumb($album->getTitle(), $album->getURL());
+		elgg_push_breadcrumb(elgg_echo('roles_creators:items:regitems'));
+		break;
+
+	default:
+		$title = elgg_echo('album:addpix');
+
+		// set up breadcrumbs
+		elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
+		elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
+		elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+		elgg_push_breadcrumb($album->getTitle(), $album->getURL());
+		elgg_push_breadcrumb(elgg_echo('album:addpix'));
+		break;
+}
 
 $uploader = get_input('uploader');
 if ($uploader == 'basic') {

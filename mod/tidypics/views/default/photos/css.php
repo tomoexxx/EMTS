@@ -43,6 +43,8 @@
 	width:153px;
 	height:153px;
 	cursor: move;
+	/* Add Tani 2013.12.09 */
+	margin: 0 3px;
 }
 
 .tidypics-river-list > li {

@@ -25,9 +25,25 @@ echo '<div><label>' . elgg_echo('caption') . '</label>';
 echo elgg_view('input/longtext', array('name' => 'caption[]'));
 echo '</div>';
 
-echo '<div><label>' . elgg_echo("tags") . '</label>';
-echo elgg_view('input/tags', array('name' => 'tags[]'));
-echo '</div>';
+/* Add Tani 2013.12.09 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		echo '<div>';
+		echo elgg_view('input/hidden', array('name' => 'tags[]', 'value' => 'creator'));
+		echo '</div>';
+		break;
+	case 'admin':
+		echo '<div><label>' . elgg_echo("tags") . '</label>';
+		echo elgg_view('input/tags', array('name' => 'tags[]'));
+		echo '</div>';
+		break;
+	default:
+		echo '<div>';
+		echo elgg_view('input/hidden', array('name' => 'tags[]'));
+		echo '</div>';
+		break;
+}	
 
 echo elgg_view('input/hidden', array('name' => 'guid[]', 'value' => $image->getGUID()));
 echo '<fieldset></div>';

@@ -21,23 +21,43 @@ if (!$album) {
 $owner = $album->getContainerEntity();
 elgg_set_page_owner_guid($owner->getGUID());
 
-$title = elgg_echo('tidypics:sort', array($album->getTitle()));
+/* Add Tani 2013.12.09 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		$title = elgg_echo('roles_creators:sort', array($album->getTitle()));
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if (elgg_instanceof($owner, 'group')) {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
-} else {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-}
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb(elgg_echo('album:sort'));
+		// set up breadcrumbs
+		elgg_push_breadcrumb(elgg_echo('roles_creators:items:themelist'), 'photos/creator/');
+		elgg_push_breadcrumb($album->getTitle(), $album->getURL());
+		elgg_push_breadcrumb(elgg_echo('roles_creators:items:sort'));
 
-if ($album->getSize()) {
-	$content = elgg_view_form('photos/album/sort', array(), array('album' => $album));
-} else {
-	$content = elgg_echo('tidypics:sort:no_images');
+		if ($album->getSize()) {
+			$content = elgg_view_form('photos/album/sort', array(), array('album' => $album));
+		} else {
+			$content = elgg_echo('roles_creators:sort:no_images');
+		}
+		break;
+	default:
+		$title = elgg_echo('tidypics:sort', array($album->getTitle()));
+
+		// set up breadcrumbs
+		elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
+		elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
+		if (elgg_instanceof($owner, 'group')) {
+			elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+		} else {
+			elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+		}
+		elgg_push_breadcrumb($album->getTitle(), $album->getURL());
+		elgg_push_breadcrumb(elgg_echo('album:sort'));
+
+		if ($album->getSize()) {
+			$content = elgg_view_form('photos/album/sort', array(), array('album' => $album));
+		} else {
+			$content = elgg_echo('tidypics:sort:no_images');
+		}
+		break;
 }
 
 $body = elgg_view_layout('content', array(

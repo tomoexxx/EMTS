@@ -106,19 +106,18 @@ if (elgg_is_admin_logged_in()) {
 	));
 }
 
-$access_label = elgg_echo('access');
 /* Add Tani 2013.12.07 */
 $role = roles_get_role();
 switch ($role->name) {
 	case 'creator':
-		$access_input = elgg_view('input/access', array(
+		$access_input = elgg_view('input/hidden', array(
 			'name' => 'access_id',
 			'id' => 'blog_access_id',
-			'disabled' => 'true',
 			'value' => $vars['access_id']
 		));
 		break;
 	default:
+		$access_label = elgg_echo('access');
 		$access_input = elgg_view('input/access', array(
 			'name' => 'access_id',
 			'id' => 'blog_access_id',

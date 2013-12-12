@@ -25,11 +25,25 @@ $guid = elgg_extract('guid', $vars, 0);
 </div>
 
 <?php
-if (elgg_is_admin_logged_in()) {
-echo "<div>";
-echo "	<label>" . elgg_echo('tags') . "</label>";
-echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags));
-echo "</div>";
+/* Modify Tani 2013.12.09 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'admin':
+		echo "<div>";
+		echo "	<label>" . elgg_echo('tags') . "</label>";
+		echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags));
+		echo "</div>";
+		break;
+	case 'creator':
+		echo "<div>";
+		echo elgg_view('input/hidden', array('name' => 'tags', 'value' => $tags));
+		echo "</div>";
+		break;
+	default:
+		echo "<div>";
+		echo elgg_view('input/hidden', array('name' => 'tags', 'value' => $tags));
+		echo "</div>";
+		break;
 }
 ?>
 
@@ -40,11 +54,23 @@ if ($categories) {
 	echo $categories;
 }
 
+/* Add Tani 2013.12.09 */
+$role = roles_get_role();
+switch ($role->name) {
+	case 'creator':
+		echo "<div>";
+		echo elgg_view('input/hidden', array('name' => 'access_id', 'value' => $access_id));
+		echo "</div>";
+		break;	
+	default:
+		echo "<div>";
+		echo "	<label>" . elgg_echo('access') . "</label>";
+		echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id));
+		echo "</div>";
+		break;
+}
 ?>
-<div>
-	<label><?php echo elgg_echo('access'); ?></label>
-	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id)); ?>
-</div>
+
 <div class="elgg-foot">
 <?php
 echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));

@@ -45,7 +45,6 @@ elgg_register_menu_item('page', array('name' => 'toppage',
 			'filter' => '',
 			'content' => $content,
 			'title' => $title,
-			'sidebar' => elgg_view('creator/sidebar'),
 		);
 
 		$body = elgg_view_layout('content', $params);

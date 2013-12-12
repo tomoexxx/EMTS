@@ -22,6 +22,16 @@ $japanese = array(
 	'roles_creators:items:themelist' => 'テーマ一覧',
 	'roles_creators:items:edittheme' => 'テーマ作成',
 	'roles_creators:items:regitems' => '作品登録',
+	'roles_creators:items:sort' => '並び替え',
+	'roles_creators:uploader:basic' => '1回で10個（サイズ制限：%s MB/枚）までの作品画像をアップロードできます。アップロードする画像を選び終わった後、次のページで作品のタイトルと説明を入力することができます。',
+	'roles_creators:sort:instruct' => 'テーマ内の作品画像をドラッグ＆ドロップで並び替えができます。終了時には保存ボタンを押してください。',
+	'roles_creators:sort:no_images' => '並び替えを行う作品画像がありません。上のリンクから作品画像をアップロードしてください。',
+	'roles_creators:album_select' => '作品画像を登録するテーマを選択してください。あるいは、新しくテーマを作成してください。',
+	'roles_creators:sort' => 'テーマ「%s」の並び替え',
+	'roles_creators:items:edit' => '作品情報編集',
+	'roles_creators:items:regist' => '作品情報登録',
+	'roles_creators:items:delete' => '作品削除',
+	'roles_creators:items:deltheme' => 'テーマ削除',
 	
 	// Events for Creators
 	'roles_creators:event:title' => 'イベント',

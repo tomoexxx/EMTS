@@ -373,7 +373,9 @@ function tidypics_page_handler($page) {
 		
 		/* Add Tani 2013.07.20 */
 		case "contest":
-                        require "$base_lists/contestsall.php";
+			/* Modify Tani 2013.12.09 */
+			//require "$base_lists/contestsall.php";
+			forward('/photos/group/174');
 			break;
 
 		/* Add Tani 2013.12.01 */
